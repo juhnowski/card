@@ -35,9 +35,9 @@ class S(BaseHTTPRequestHandler):
         # Doesn't do anything with posted data
         self._set_headers()
 	GPIO.output(7,False)
-	sleep(1500.00)
+	sleep(1.50)
 	GPIO.output(8,True)
-	sleep(1500.00)
+	sleep(1.50)
         self.wfile.write("<html><body><h1>DONE!</h1><br> Then som activate process start</body></html>")
 
 def run(server_class=HTTPServer, handler_class=S, port=80):
@@ -51,10 +51,13 @@ if __name__ == "__main__":
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(7,GPIO.OUT)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(8,GPIO.OUT)
+
     GPIO.output(7,True)
-    sleep(1500.00)
+    sleep(1.50)
     GPIO.output(8,True)
-    sleep(1500.00)
+    sleep(1.50)
 
     if len(argv) == 2:
         run(port=int(argv[1]))
