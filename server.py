@@ -12,6 +12,9 @@ Send a POST request::
 """
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import SocketServer
+import RPi.GPIO as GPIO
+
+from time import sleep
 
 class S(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -31,6 +34,10 @@ class S(BaseHTTPRequestHandler):
     def do_POST(self):
         # Doesn't do anything with posted data
         self._set_headers()
+	GPIO.output(7,False)
+	sleep(1500.00)
+	GPIO.output(8,True)
+	sleep(1500.00)
         self.wfile.write("<html><body><h1>DONE!</h1><br> Then som activate process start</body></html>")
 
 def run(server_class=HTTPServer, handler_class=S, port=80):
@@ -41,6 +48,13 @@ def run(server_class=HTTPServer, handler_class=S, port=80):
 
 if __name__ == "__main__":
     from sys import argv
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(7,GPIO.OUT)
+    GPIO.output(7,True)
+    sleep(1500.00)
+    GPIO.output(8,True)
+    sleep(1500.00)
 
     if len(argv) == 2:
         run(port=int(argv[1]))
